@@ -119,6 +119,12 @@ def translate(input_seq):
     aa_seq = "".join(aa_list)
     print("Translated sequence:", aa_seq)
 
+    # Issues to fix and functionality to add: 
+    # Issue 1: cannot handle DNA sequences that contain a number of bases that is not divisible by 3.
+    # Issue 2: does not selectively begin translation at start codon (ATG)
+    # Functionality 1: give predicted MW and pI of translated peptide
+    # Functionality 2: identify all ORF and give alternative peptides that can be translated 
+
 #Reads FASTA files and outputs python dictionary with each entry {>name1:sequence1,>name2:sequence2}
 def read_fasta(input_file):
     #make sure you import SeqIO from Biopython with "from Bio import SeqIO"
