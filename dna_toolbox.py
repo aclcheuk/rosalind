@@ -1,4 +1,5 @@
-from Bio import SeqIO # pip install biopython
+# from Bio import SeqIO # pip install biopython
+# Try to create algorithms without using Biopython toolkit
 
 # Prints total length of sequence and counts for each base
 def base_count(input_seq):
@@ -125,6 +126,8 @@ def translate(input_seq):
     # Functionality 1: give predicted MW and pI of translated peptide
     # Functionality 2: identify all ORF and give alternative peptides that can be translated 
 
+
+"""
 #Reads FASTA files and outputs python dictionary with each entry {>name1:sequence1,>name2:sequence2}
 def read_fasta(input_file):
     #make sure you import SeqIO from Biopython with "from Bio import SeqIO"
@@ -136,7 +139,8 @@ def read_fasta(input_file):
         print(len(seq_record))
         seq_dict[seq_record.id] = seq_record.seq # adds to dictionary seq_record.id:seq_record.seq
     return seq_dict
-    
+"""
+      
 #code to test the different functions:
 test = "AtGAACCCTTTGGGggggggggacacttggaATcGaTAAATTCCGGggctatat"
 base_count(test)
