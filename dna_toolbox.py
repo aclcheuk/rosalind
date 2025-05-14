@@ -1,7 +1,8 @@
-from Bio import SeqIO # pip install biopython
+# from Bio import SeqIO # pip install biopython
+# Try to create algorithms without using Biopython toolkit
 
 # Prints total length of sequence and counts for each base
-def base_count(input_seq):
+def base_count(input_seq:str)->int:
     caps_seq = input_seq.upper()
     count = {"A":0,
              "T":0,
@@ -15,9 +16,10 @@ def base_count(input_seq):
 
     print(count)
     print(f"Total length =", len(caps_seq))
+    return len(caps_seq)
 
 # Prints the GC concent as a percentage, also returns dictionary showing counts for each base
-def gc_content(input_seq):
+def gc_content(input_seq:str)->float:
     caps_seq = input_seq.upper()
     count = {"A":0,
              "T":0,
@@ -35,7 +37,7 @@ def gc_content(input_seq):
     return gc_content
 
 # Takes DNA input and returns transcribed RNA sequence
-def transcribe(input_seq):
+def transcribe(input_seq:str)->str:
     caps_seq = input_seq.upper()
     mrna = [*caps_seq] # separates string into list of letters using unpack [*] method
 
@@ -50,9 +52,10 @@ def transcribe(input_seq):
             pass
     mrna = "".join(mrna) # joins each element of list into a string
     print("Transcribed mRNA sequence:", mrna)
+    return mrna
 
 # Reverses transcription (replacing all 'U's with 'T's)
-def rev_transcribe(input_seq):
+def rev_transcribe(input_seq:str)->str:
     caps_seq = input_seq.upper()
     dna = [*caps_seq] # separates string into list of letters using unpack [*] method
 
@@ -63,9 +66,10 @@ def rev_transcribe(input_seq):
             pass
     dna = "".join(dna) # joins each element of list into a string
     print("DNA sequence:", dna)
+    return dna
 
 #Reverse Complement:
-def rev_comp(input_seq):
+def rev_comp(input_seq:str)->str:
     caps_seq = input_seq.upper()
     reverse = caps_seq[::-1] # reverses sequence
     reverse = [*reverse] # separates bases into list items
@@ -83,9 +87,10 @@ def rev_comp(input_seq):
             pass
     reverse = "".join(reverse) # joins each element of list back into a single string
     print("Reverse complement:", reverse)
+    return reverse
 
 #Translate DNA or RNA into amino acid sequence (one letter code):
-def translate(input_seq):
+def translate(input_seq:str)->str:
     codon_table = {
     # Codon table in dictionary format
     # 'M' - START, '*' - STOP
@@ -118,6 +123,7 @@ def translate(input_seq):
 
     aa_seq = "".join(aa_list)
     print("Translated sequence:", aa_seq)
+    return aa_seq
 
     # Issues to fix and functionality to add: 
     # Issue 1: cannot handle DNA sequences that contain a number of bases that is not divisible by 3.
@@ -125,6 +131,8 @@ def translate(input_seq):
     # Functionality 1: give predicted MW and pI of translated peptide
     # Functionality 2: identify all ORF and give alternative peptides that can be translated 
 
+
+"""
 #Reads FASTA files and outputs python dictionary with each entry {>name1:sequence1,>name2:sequence2}
 def read_fasta(input_file):
     #make sure you import SeqIO from Biopython with "from Bio import SeqIO"
@@ -136,7 +144,8 @@ def read_fasta(input_file):
         print(len(seq_record))
         seq_dict[seq_record.id] = seq_record.seq # adds to dictionary seq_record.id:seq_record.seq
     return seq_dict
-    
+"""
+      
 #code to test the different functions:
 test = "AtGAACCCTTTGGGggggggggacacttggaATcGaTAAATTCCGGggctatat"
 base_count(test)
