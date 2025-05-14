@@ -1,2 +1,2 @@
-# rosalind
+Rosalind
 Code used to solve rosalind.info problems
