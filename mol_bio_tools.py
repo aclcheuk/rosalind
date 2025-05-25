@@ -131,6 +131,17 @@ def translate(input_seq:str)->str:
     # Functionality 1: give predicted MW and pI of translated peptide
     # Functionality 2: identify all ORF and give alternative peptides that can be translated 
 
+# Check DNA sequence:
+bases = ["A", "C", "T", "G", "U", "N", "X"]
+def is_dna_seq(input_seq:str)->bool:
+    input_seq = input_seq.upper()
+    for base in input_seq:
+        if base in bases:
+            continue
+        else:
+            print("Please input DNA sequence.")
+            return False
+    return True
 
 """
 #Reads FASTA files and outputs python dictionary with each entry {>name1:sequence1,>name2:sequence2}
@@ -145,14 +156,14 @@ def read_fasta(input_file):
         seq_dict[seq_record.id] = seq_record.seq # adds to dictionary seq_record.id:seq_record.seq
     return seq_dict
 """
-      
 #code to test the different functions:
-test = "AtGAACCCTTTGGGggggggggacacttggaATcGaTAAATTCCGGggctatat"
-base_count(test)
-gc_content(test)
-transcribe(test)
-rev_comp(test)
-translate(test)
+if __name__ == "__main__":
+    test = "AtGAACCCTTTGGGggggggggacacttggaATcGaTAAATTCCGGggctatat"
+    base_count(test)
+    gc_content(test)
+    transcribe(test)
+    rev_comp(test)
+    translate(test)
 
 """ used to solve GC content problem in Rosalind Stronghold
 my_dict = read_fasta("rosalind_gc.txt")
