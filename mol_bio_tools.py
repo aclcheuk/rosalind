@@ -86,7 +86,6 @@ def rev_comp(input_seq:str)->str:
         else:
             pass
     reverse = "".join(reverse) # joins each element of list back into a single string
-    print("Reverse complement:", reverse)
     return reverse
 
 #Translate DNA or RNA into amino acid sequence (one letter code):
@@ -122,7 +121,6 @@ def translate(input_seq:str)->str:
         aa_list[i] = codon_table[codon_list[i]]
 
     aa_seq = "".join(aa_list)
-    print("Translated sequence:", aa_seq)
     return aa_seq
 
     # Issues to fix and functionality to add: 
