@@ -154,6 +154,18 @@ def read_fasta(input_file):
         seq_dict[seq_record.id] = seq_record.seq # adds to dictionary seq_record.id:seq_record.seq
     return seq_dict
 """
+
+def parse_fasta(fasta_file):
+    with open(fasta_file) as fasta_content:
+        sequence = ""
+        for line in fasta_content:
+            line = line.rstrip()
+            if line.startswith(">"):
+                descriptor = line
+            else:
+                sequence = sequence + line 
+        yield descriptor, line
+
 #code to test the different functions:
 if __name__ == "__main__":
     test = "AtGAACCCTTTGGGggggggggacacttggaATcGaTAAATTCCGGggctatat"
@@ -162,6 +174,8 @@ if __name__ == "__main__":
     transcribe(test)
     rev_comp(test)
     translate(test)
+    test1 = parse_fasta("rosalind_gc.txt")
+    print(test1)
 
 """ used to solve GC content problem in Rosalind Stronghold
 my_dict = read_fasta("rosalind_gc.txt")
