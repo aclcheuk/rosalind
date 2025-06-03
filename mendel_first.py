@@ -1,9 +1,9 @@
 """k, m, n individuals in a population"""
 
 def calc_offspring_probs(homo_dominant:int, hetero:int, homo_recessive:int)->float:
-    k = homo_dominant
-    m = hetero
-    n = homo_recessive
+    k = homo_dominant #DD
+    m = hetero # Dd
+    n = homo_recessive #dd
     total_pop = k + m + n
 
     prob_k1 = k/total_pop

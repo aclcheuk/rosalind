@@ -155,16 +155,45 @@ def read_fasta(input_file):
     return seq_dict
 """
 
-def parse_fasta(fasta_file):
-    with open(fasta_file) as fasta_content:
-        sequence = ""
-        for line in fasta_content:
-            line = line.rstrip()
-            if line.startswith(">"):
-                descriptor = line
-            else:
-                sequence = sequence + line 
-        yield descriptor, line
+def parse_fasta(filepath:str):
+    current_header = None
+    current_sequence_lines = []
+    try:
+        with open(filepath, 'r') as f:
+            for line in f:
+                line = line.strip()  # Remove leading/trailing whitespace
+                if not line or line.startswith(';'):
+                    # Ignore blank lines or comment lines
+                    continue
+                elif line.startswith('>'):
+                    # Found a new header line
+                    if current_header is not None:
+                        # If there was a previous sequence, yield it
+                        yield current_header, "".join(current_sequence_lines)
+                        current_sequence_lines = [] # Reset for the new sequence
+
+                    current_header = line[1:]  # Store header without the '>'
+                else:
+                    # Found a sequence line
+                    if current_header is None:
+                        # This handles cases where a file starts with sequence data
+                        # without a header. In a strict FASTA, this shouldn't happen,
+                        # but we can treat it as an error or assign a default header.
+                        print(f"Warning: Sequence data found before any header in {filepath}. Skipping: {line}")
+                        continue
+                    current_sequence_lines.append(line)
+
+            # After the loop, yield the last sequence if any
+            if current_header is not None:
+                yield current_header, "".join(current_sequence_lines)
+
+    except FileNotFoundError:
+        print(f"Error: File not found at {filepath}")
+        # In a generator, you might choose to raise the exception or yield nothing
+        # Here, we print an error and the generator will simply finish.
+    except Exception as e:
+        print(f"An error occurred while parsing the file: {e}")
+        # Similar to FileNotFoundError, the generator will stop here.
 
 #code to test the different functions:
 if __name__ == "__main__":
@@ -174,8 +203,8 @@ if __name__ == "__main__":
     transcribe(test)
     rev_comp(test)
     translate(test)
-    test1 = parse_fasta("rosalind_gc.txt")
-    print(test1)
+    for gen in parse_fasta("rosalind_gc.txt"):
+        print(gen)
 
 """ used to solve GC content problem in Rosalind Stronghold
 my_dict = read_fasta("rosalind_gc.txt")
