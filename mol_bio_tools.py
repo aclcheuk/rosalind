@@ -130,8 +130,12 @@ def translate(input_seq:str)->str:
     # Functionality 2: identify all ORF and give alternative peptides that can be translated 
 
 # Check DNA sequence:
-bases = ["A", "C", "T", "G", "U", "N", "X"]
+"""International Union of Pure and Applied Chemistry:
+B = (C or G or T) ; D = (A or G or T) ; H = (A or C or T) ; K = (G or T) ;
+M = (A or C) ; N = (A or C or G or T) ; R = (A or G) ; S = (C or G) ;
+V = (A or C or G) ; W = (A or T) ; Y = (C or T) """
 def is_dna_seq(input_seq:str)->bool:
+    bases = ["A", "C", "T", "G", "B", "D", "H", "K", "M", "N", "R", "S", "V", "W", "Y"]
     input_seq = input_seq.upper()
     for base in input_seq:
         if base in bases:
