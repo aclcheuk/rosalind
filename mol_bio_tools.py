@@ -130,7 +130,7 @@ def translate(input_seq:str)->str:
     # Functionality 2: identify all ORF and give alternative peptides that can be translated 
 
 # Check DNA sequence:
-"""International Union of Pure and Applied Chemistry:
+"""International Union of Pure and Applied Chemistry: ACTG
 B = (C or G or T) ; D = (A or G or T) ; H = (A or C or T) ; K = (G or T) ;
 M = (A or C) ; N = (A or C or G or T) ; R = (A or G) ; S = (C or G) ;
 V = (A or C or G) ; W = (A or T) ; Y = (C or T) """
@@ -199,6 +199,22 @@ def parse_fasta(filepath:str):
         print(f"An error occurred while parsing the file: {e}")
         # Similar to FileNotFoundError, the generator will stop here.
 
+def prot_mw_calc(input_aa_seq:str)->float:
+    input_aa_seq = input_aa_seq.upper()
+    aa_mw = {'A': 71.04, 'C': 103.01, 'D': 115.03, 'E': 129.04, 'F': 147.07,
+           'G': 57.02, 'H': 137.06, 'I': 113.08, 'K': 128.09, 'L': 113.08,
+           'M': 131.04, 'N': 114.04, 'P': 97.05, 'Q': 128.06, 'R': 156.10,
+           'S': 87.03, 'T': 101.05, 'V': 99.07, 'W': 186.08, 'Y': 163.06 }
+    mw = 0
+    for aa in input_aa_seq:
+        if aa in aa_mw:
+            mw += aa_mw[aa]
+        else:
+            continue
+    print(f"The molecular weight of {input_aa_seq} is {mw/1000} kDa")
+    return mw
+
+
 #code to test the different functions:
 if __name__ == "__main__":
     test = "AtGAACCCTTTGGGggggggggacacttggaATcGaTAAATTCCGGggctatat"
@@ -206,9 +222,11 @@ if __name__ == "__main__":
     gc_content(test)
     transcribe(test)
     rev_comp(test)
-    translate(test)
-    for gen in parse_fasta("rosalind_gc.txt"):
-        print(gen)
+    aa_test = translate(test)
+    #for gen in parse_fasta("rosalind_gc.txt"):
+        #print(gen)
+    prot_mw_calc(aa_test)
+    
 
 """ used to solve GC content problem in Rosalind Stronghold
 my_dict = read_fasta("rosalind_gc.txt")
