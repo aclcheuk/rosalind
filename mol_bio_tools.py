@@ -130,8 +130,12 @@ def translate(input_seq:str)->str:
     # Functionality 2: identify all ORF and give alternative peptides that can be translated 
 
 # Check DNA sequence:
-bases = ["A", "C", "T", "G", "U", "N", "X"]
+"""International Union of Pure and Applied Chemistry: ACTG
+B = (C or G or T) ; D = (A or G or T) ; H = (A or C or T) ; K = (G or T) ;
+M = (A or C) ; N = (A or C or G or T) ; R = (A or G) ; S = (C or G) ;
+V = (A or C or G) ; W = (A or T) ; Y = (C or T) """
 def is_dna_seq(input_seq:str)->bool:
+    bases = ["A", "C", "T", "G", "B", "D", "H", "K", "M", "N", "R", "S", "V", "W", "Y"]
     input_seq = input_seq.upper()
     for base in input_seq:
         if base in bases:
@@ -195,6 +199,22 @@ def parse_fasta(filepath:str):
         print(f"An error occurred while parsing the file: {e}")
         # Similar to FileNotFoundError, the generator will stop here.
 
+def prot_mw_calc(input_aa_seq:str)->float:
+    input_aa_seq = input_aa_seq.upper()
+    aa_mw = {'A': 71.03711, 'C': 103.00919, 'D': 115.02694, 'E': 129.04259, 'F': 147.06841,
+           'G': 57.02146, 'H': 137.05891, 'I': 113.08406, 'K': 128.09496, 'L': 113.08406,
+           'M': 131.04049, 'N': 114.04293, 'P': 97.05276, 'Q': 128.05858, 'R': 156.10111,
+           'S': 87.03203, 'T': 101.04768, 'V': 99.06841, 'W': 186.07931, 'Y': 163.06333}
+    mw = 0
+    for aa in input_aa_seq:
+        if aa in aa_mw:
+            mw += aa_mw[aa]
+        else:
+            continue
+    print(f"The molecular weight of {input_aa_seq} is {mw/1000} kDa")
+    return mw
+
+
 #code to test the different functions:
 if __name__ == "__main__":
     test = "AtGAACCCTTTGGGggggggggacacttggaATcGaTAAATTCCGGggctatat"
@@ -202,9 +222,11 @@ if __name__ == "__main__":
     gc_content(test)
     transcribe(test)
     rev_comp(test)
-    translate(test)
-    for gen in parse_fasta("rosalind_gc.txt"):
-        print(gen)
+    aa_test = translate(test)
+    #for gen in parse_fasta("rosalind_gc.txt"):
+        #print(gen)
+    prot_mw_calc(aa_test)
+    
 
 """ used to solve GC content problem in Rosalind Stronghold
 my_dict = read_fasta("rosalind_gc.txt")
